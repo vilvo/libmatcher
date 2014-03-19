@@ -1,0 +1,3 @@
+Authors of libmatcher:
+Bartlomiej Pawlik <pawlik.bart@gmail.com>
+Ville Ilvonen <ville.ilvonen@intel.com>
