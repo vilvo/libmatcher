@@ -1,0 +1,36 @@
+libmatcher (1.0-5) UNRELEASED; urgency=low
+
+  * libmatcher: example images and tests updated
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Fri, 14 Mar 2014 13:04:43 +0200
+
+libmatcher (1.0-4) UNRELEASED; urgency=low
+
+  * fix: added python-modules for fMBT to packaging
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Thu, 23 Jan 2014 10:20:32 +0200
+
+libmatcher (1.0-3) UNRELEASED; urgency=low
+
+  * libmatcher - fixed empty package to install .so to /usr/local/lib
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Thu, 16 Jan 2014 15:48:37 +0200
+
+libmatcher (1.0-2) UNRELEASED; urgency=low
+
+  * libmatcher dependencies added
+  * libmatcher-dev update to overlength description
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Thu, 16 Jan 2014 15:18:15 +0200
+
+libmatcher (1.0-1) UNRELEASED; urgency=low
+
+  * libmatcher-dev - development files for libmatcher
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Thu, 16 Jan 2014 14:52:52 +0200
+
+libmatcher (1.0) UNRELEASED; urgency=low
+
+  * Packaging for libmatcher
+
+ -- Ville Ilvonen <ville.ilvonen@intel.com>  Thu, 16 Jan 2014 10:45:23 +0200

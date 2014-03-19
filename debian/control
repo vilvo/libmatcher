@@ -1,0 +1,19 @@
+Source: libmatcher
+Maintainer: Ville Ilvonen <ville.ilvonen@intel.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 9), cmake, opencv, libleptonica-dev, libtesseract-dev
+
+Package: libmatcher
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, opencv, libleptonica, tesseract-ocr
+Description: computer-vision based verification for SW testing
+ libmatcher provides methods to utilize computer-vision algorithms
+ to locate subregions from an image and locate characters. location
+ information can be used for both verification and robotics guidance.
+
+Package: libmatcher-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: computer-vision based verification for SW testing (dev files)
