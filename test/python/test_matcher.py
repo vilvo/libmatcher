@@ -43,24 +43,6 @@ def printresult(result, maxlocations=1, onlyoneresult=False):
     print "message: ", result.message
     print '-'*40
 
-mconfig = MatcherConfig(useOCR = True,
-                        useOIR = True,
-                        nfeatures = 10000,
-                        scaleFactor = 1.2,
-                        nlevels = 16,
-                        edgeThreshold = 9,
-                        firstLevel = 0,
-                        WTA_K = 2,
-                        scoreType = 0,
-                        patchSize = 19,
-                        min_dist_thresh = 0,
-                        max_nndr_ratio = 1.0,
-                        min_inliers = 4,
-                        ransac_reprojection_thresh = 10,
-                        gpu_enabled=False,
-                        locate = True,
-                        scale_invariant = True)
-
 mvconfig = MatcherConfig(useOCR = False,
                          useOIR = True,
                          nfeatures = 10000,
@@ -81,7 +63,7 @@ mvconfig = MatcherConfig(useOCR = False,
 class MatcherTest(unittest.TestCase):
 
     def test_loadunload(self):
-        m = Matcher(mconfig) # could be in setUp() but m shorter than self.m
+        m = Matcher() # could be in setUp() but m shorter than self.m
         self.assertTrue(m.loadImage("../img/homescreen.png"))
         self.assertTrue(m.loadImage("../img/appgrid.png"))
         self.assertTrue(m.loadImage("../img/virtualkeyb_lowercase.png"))
@@ -93,7 +75,7 @@ class MatcherTest(unittest.TestCase):
         m.unloadImage("../img/virtualkeyb_lowercase.png")
 
     def test_featurematch(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/appgrid.png",
                          "../img/icon_clockworktomato.png", 100, "FEATURE",
                          resultimage="/tmp/test.jpg")
@@ -109,7 +91,7 @@ class MatcherTest(unittest.TestCase):
         #printresult(result)
 
     def test_templatematch(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/appgrid.png",
                          "../img/icon_clockworktomato.png",
                          100, "MATCHTEMPLATE")
@@ -125,7 +107,7 @@ class MatcherTest(unittest.TestCase):
         #printresult(result)
 
     def test_multipletemplatematch(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/quick_settings.png", "../img/icon_tickon.png",
                          99, "MATCHTEMPLATE", maxlocations=2, scale_factor=1)
         self.assertTrue(result.result[0] == 99)
@@ -142,13 +124,13 @@ class MatcherTest(unittest.TestCase):
         #printresult(result)
 
     def test_edgedetection(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/appgrid.png",
                          "../img/icon_clockworktomato.png", 0, "SOBEL")
         self.assertTrue(result.result[0] == 99)
 
     def test_negative(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match(icon="")
         self.assertTrue(result.result[0] == -6)
         result = m.match(None, None)
@@ -157,7 +139,7 @@ class MatcherTest(unittest.TestCase):
         self.assertTrue(result.result[0] == -6)
 
     def test_OCR_different_fonts(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         print "NOTE: tesseract prints noise"
         #m.loadImage("../img/homescreen2.png")
         result = m.match("../img/homescreen2.png", "SONERA", 100, "OCR")
@@ -168,7 +150,7 @@ class MatcherTest(unittest.TestCase):
         self.assertTrue(result.result[0] == 100)
 
     def test_OCR_sentences(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/virtualkeyb_lowercase.png",
                          "The conversation will appear here.", 100, "OCR")
         self.assertTrue(result.result[0] == 100)
@@ -186,7 +168,7 @@ class MatcherTest(unittest.TestCase):
         self.assertTrue(result.result[0] == 100)
 
     def test_OCR_multiple(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/quick_settings.png", "OFF", 100, "OCR", maxlocations=3)
         self.assertTrue(result.result[0] == 100)
         self.assertTrue(result.result[1] == 100)
@@ -197,27 +179,27 @@ class MatcherTest(unittest.TestCase):
         self.assertTrue(result.result[2] == 100)
 
     def test_locate_inside_region_of_interest(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         result = m.match("../img/quick_settings.png",
                          "../img/icon_tickon.png", 0, "MATCHTEMPLATE",
                          "../img/roi_bluetooth_settings.png")
         self.assertTrue(result.result[0] == 97)
 
     def test_locate_in_search_area(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         bbox = Rect(100, 500, 300, 400)
         result = m.match("../img/homescreen.png",
                          "../img/icon_appgrid.png", searcharea=bbox)
         self.assertTrue(result.result[0] == 51)
 
     def test_load_before_matching(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         self.assertTrue(m.loadImage("../img/homescreen.png"))
         result = m.match(icon="../img/icon_appgrid.png")
         self.assertTrue(result.result[0] == 51)
 
     def test_locate_characters(self):
-        m = Matcher(mconfig)
+        m = Matcher()
         self.assertTrue(m.loadImage("../img/virtualkeyb_lowercase.png"))
         chars = "qwertyuiopasdfghjklzxcvbnm"
         bbox = m.match(icon="../img/keyboardarea.png").bbox[0]

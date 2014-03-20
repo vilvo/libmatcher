@@ -21,12 +21,33 @@ import ctypes
 from matcher_types import MatcherConfig, MatchCQuery, MatchCResult, LocateMethod
 from matcher_types import Point, Rect
 
+# default config
+dconfig = MatcherConfig(useOCR = True,
+                        useOIR = True,
+                        nfeatures = 10000,
+                        scaleFactor = 1.2,
+                        nlevels = 16,
+                        edgeThreshold = 9,
+                        firstLevel = 0,
+                        WTA_K = 2,
+                        scoreType = 0,
+                        patchSize = 19,
+                        min_dist_thresh = 0,
+                        max_nndr_ratio = 1.0,
+                        min_inliers = 4,
+                        ransac_reprojection_thresh = 10,
+                        gpu_enabled=False,
+                        locate = True,
+                        scale_invariant = True)
+
 libmatcher = ctypes.cdll.LoadLibrary('libmatcher.so')
 
 class Matcher(object):
     """Wrapper for shared Matcher library functions
     """
-    def __init__(self, mconfig):
+    def __init__(self, mconfig=None):
+        if mconfig == None:
+            mconfig = dconfig
         self.obj = libmatcher.Matcher_new(ctypes.byref(mconfig))
 
     def loadImage(self, screenshot):
