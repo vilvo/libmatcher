@@ -1,9 +1,28 @@
-libmatcher
-==========
+# libmatcher
 
-Python usage with fMBT:
+library to match visual information, like areas and text, from images.
+Matching results include location data that can be used for example user-interaction testing.
 
+## Basic usage
+
+Given an image from an Android device homescreen
+
+![](https://github.com/vilvo/libmatcher/blob/master/test/img/homescreen.png)
+
+Basic text recognition:
+```python
+from MatcherWrapper import Matcher
+
+m = Matcher()
+r = m.match('test/img/homescreen.png', "Tampere", threshold=100, method="OCR")
 ```
+produces result image
+
+![](https://github.com/vilvo/libmatcher/blob/master/example/100_homescreen__Tampere_1395905228.png)
+
+## Simple usage with fMBT and Android
+
+```python
 import fmbtandroid
 from MatcherWrapper import Matcher
 
