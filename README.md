@@ -7,7 +7,7 @@ Matching results include location data that can be used for example user-interac
 
 Given an image from an Android device homescreen
 
-![](https://github.com/vilvo/libmatcher/blob/master/test/img/homescreen.png)
+![](https://raw.github.com/vilvo/libmatcher/master/test/img/homescreen.png)
 
 Basic text recognition:
 ```python
@@ -18,7 +18,7 @@ r = m.match('test/img/homescreen.png', "Tampere", threshold=100, method="OCR")
 ```
 produces result image
 
-![](https://github.com/vilvo/libmatcher/blob/master/example/100_homescreen__Tampere_1395905228.png)
+![](https://raw.github.com/vilvo/libmatcher/master/example/100_homescreen__Tampere_1395905228.png)
 
 ## Simple usage with fMBT and Android
 
