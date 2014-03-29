@@ -3,6 +3,25 @@
 library to match visual information, like areas and text, from images.
 Matching results include location data that can be used for example user-interaction testing.
 
+## Building from source and testing
+
+Ubuntu 13.10:
+
+```
+sudo apt-get install build-essential cmake libopencv-dev libboost-dev libtesseract-dev libleptonica-dev tesseract-ocr-eng
+cmake .
+make
+export LD_LIBRARY_PATH=$PWD/lib
+cd test/cpp
+cmake .
+make
+./example_*
+cd ../python
+python test_matcher.py
+```
+
+libmatcher requires OpenCV 2.4. For earlier Ubuntu versions please install OpenCV from source.
+
 ## Basic usage
 
 Given an image from an Android device homescreen
