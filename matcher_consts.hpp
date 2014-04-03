@@ -41,6 +41,10 @@ namespace matcher {
     const int MINTHRESH = 10;
     const int MAXTHRESH = 200;
     const int STEPTHRESH = 10;
+    const int THRESHSTEPS = (MAXTHRESH-MINTHRESH)/STEPTHRESH+1;
+    const int MEANTHRESH = (MAXTHRESH+MINTHRESH)/2;
+    const int FIRSTTHRESH = MEANTHRESH % STEPTHRESH ? MEANTHRESH-STEPTHRESH/2
+                                                    : MEANTHRESH;
     const std::string ILLEGALCHARS = "\\/:?\"<>|";
     const int PARAINDENT = 4;  // Number of characters for paragraph identation
 
