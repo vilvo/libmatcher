@@ -590,12 +590,15 @@ cv::Ptr<cv::Mat> Matcher::runOCR(const MatchQuery &mquery,
     bool found = findText(image, mquery.icon, roi, mquery, mresult);
 
     // If still not found then perform thresholding
-    for (int i = matcher::MINTHRESH; i < matcher::MAXTHRESH && !found;
-         i+= matcher::STEPTHRESH) {
-        MatcherUtils::thresholdImage(image, &thresholded, i);
+    int th = matcher::FIRSTTHRESH, sign = 1;
+    // Loop alternately up and down from the center value, e.g. if
+    // matcher::THRESHSTEPS = 6 then we have i: 3, 4, 2, 5, 1, 6.
+    for (int i = 1; i < matcher::THRESHSTEPS && !found; i++, sign *= -1) {
+        MatcherUtils::thresholdImage(image, &thresholded, th);
         found = findText(thresholded, mquery.icon, roi, mquery, mresult);
         mresult->message = MatcherUtils::getmessage("Thresholding parameter: ",
-                                                    i, 0);
+                                                    th, 0);
+        th += sign*i*matcher::STEPTHRESH;
     }
 
     // If it is not found then sharpen and search again
@@ -960,11 +963,11 @@ int Matcher::mapCharToBBox(const cv::Mat &image, const cv::Rect &roi,
     float maxaverageconf = MatcherUtils::calcAverageConf(confs);
 
     // Perform thresholding to achieve higher contrast images
-    for (int i = matcher::MINTHRESH; i < matcher::MAXTHRESH;
-         i+= matcher::STEPTHRESH) {
+    int th = matcher::FIRSTTHRESH, sign = 1;
+    for (int i = 1; i < matcher::THRESHSTEPS; i++, sign *= -1) {
         bboxes.clear();
         confs.clear();
-        MatcherUtils::thresholdImage(image, &thresholded, i);
+        MatcherUtils::thresholdImage(image, &thresholded, th);
         tess_->TesseractRect(thresholded.data, 1, thresholded.step1(),
                              roi.x, roi.y, roi.width, roi.height);
         for (size_t k = 0; k < noduplicate.length(); k++) {
@@ -977,8 +980,9 @@ int Matcher::mapCharToBBox(const cv::Mat &image, const cv::Rect &roi,
             lettermap.swap(bboxes);
             confmap.swap(confs);
             mresult->message = MatcherUtils::getmessage("Thresholding "
-                                                        "parameter: ", i, 0);
+                                                        "parameter: ", th, 0);
         }
+        th += sign*i*matcher::STEPTHRESH;
     }
     return MatcherUtils::calcTypeMessageResult(inputtext, lettermap);
 }
@@ -1038,10 +1042,11 @@ cv::Rect Matcher::getRoi4Text(const cv::Mat &image, const std::string &message,
     // Find first line
     MatchResult res;  // temporary result
     bool found = findText(image, firstline, roi, mquery, &res);
-    for (int i = matcher::MINTHRESH; i < matcher::MAXTHRESH && !found;
-         i+= matcher::STEPTHRESH) {
-        MatcherUtils::thresholdImage(image, &thresholded, i);
+    int th = matcher::FIRSTTHRESH, sign = 1;
+    for (int i = 1; i < matcher::THRESHSTEPS && !found; i++, sign *= -1) {
+        MatcherUtils::thresholdImage(image, &thresholded, th);
         found = findText(thresholded, firstline, roi, mquery, &res);
+        th += sign*i*matcher::STEPTHRESH;
     }
     mresult(res);
 
@@ -1057,10 +1062,11 @@ cv::Rect Matcher::getRoi4Text(const cv::Mat &image, const std::string &message,
 
     // Find last line
     found = findText(image, lastline, roilastline, mquery, &res);
-    for (int i = matcher::MINTHRESH; i < matcher::MAXTHRESH && !found;
-         i+= matcher::STEPTHRESH) {
-        MatcherUtils::thresholdImage(image, &thresholded, i);
+    th = matcher::FIRSTTHRESH, sign = 1;
+    for (int i = 1; i < matcher::THRESHSTEPS && !found; i++, sign *= -1) {
+        MatcherUtils::thresholdImage(image, &thresholded, th);
         found = findText(thresholded, lastline, roilastline, mquery, &res);
+        th += sign*i*matcher::STEPTHRESH;
     }
     mresult(res, 1);
 
