@@ -246,8 +246,7 @@ void MatcherUtils::sharpenImage(const cv::Mat &image, cv::Mat *sharpened,
 
 void MatcherUtils::thresholdImage(const cv::Mat &image, cv::Mat *thresholded,
                                   const int &threshold) {
-    cv::bitwise_not(image, *thresholded);
-    cv::threshold(*thresholded, *thresholded, threshold, 255, CV_THRESH_BINARY);
+    cv::threshold(image, *thresholded, threshold, 255, CV_THRESH_BINARY_INV);
 }
 
 bool MatcherUtils::isBlack(const cv::Mat& image, const int block_size,
