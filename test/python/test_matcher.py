@@ -204,7 +204,7 @@ class MatcherTest(unittest.TestCase):
         chars = "qwertyuiopasdfghjklzxcvbnm"
         bbox = m.match(icon="../img/keyboardarea.png").bbox[0]
         result = m.locateCharacters(characters=chars, searcharea=bbox)
-        self.assertTrue(result.result[0] == 96)
+        self.assertTrue(result.result[0] == 100)
         #printresult(result, len(''.join(set(chars))), True)
 
 if __name__ == '__main__':
