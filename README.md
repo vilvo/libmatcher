@@ -5,10 +5,10 @@ Matching results include location data that can be used for example user-interac
 
 ## Building from source and testing
 
-Ubuntu 13.10:
+Ubuntu 14.04:
 
 ```
-sudo apt-get install build-essential cmake libopencv-dev libboost-dev libtesseract-dev libleptonica-dev tesseract-ocr-eng
+sudo apt-get install build-essential cmake libopencv-dev libboost-dev libtesseract-dev tesseract-ocr-eng
 cmake .
 make
 export LD_LIBRARY_PATH=$PWD/lib

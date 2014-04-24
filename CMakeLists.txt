@@ -21,7 +21,7 @@ set(LIBRARY_OUTPUT_PATH lib)
 
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS}
-  "/usr/include/tesseract" "/usr/include/leptonica" "/usr/local/include")
+  "/usr/include/tesseract" "/usr/local/include")
 link_directories(${OpenCV_LIB_DIR})
 
 add_library(libmatcher SHARED
@@ -34,7 +34,7 @@ add_library(libmatcher SHARED
     matcher_extern.hpp
     matcher_consts.hpp)
 
-target_link_libraries(libmatcher ${OpenCV_LIBS} lept tesseract)
+target_link_libraries(libmatcher ${OpenCV_LIBS} tesseract)
 set_target_properties(libmatcher PROPERTIES OUTPUT_NAME matcher)
 install(TARGETS libmatcher LIBRARY DESTINATION lib)
 
